@@ -1,0 +1,82 @@
+version: "3"
+services:
+  #app:
+  #  build:
+  #    dockerfile: ./build/Dockerfile
+  #    context: ./
+  #  environment:
+  #    MONGODB_URI: mongodb://admin:password@mongo:27017/member?authSource=admin
+  #  restart: on-failure
+  #  ports:
+  #    - "3000:3000"
+  #  networks:
+  #    - app_test
+  #  depends_on:
+  #    - mongo
+  #    - redis
+
+  mongo:
+    image: mongo:3.2
+    volumes:
+      - mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: om-payment
+    healthcheck:
+      test: echo 'db.stats().ok' | mongo localhost:27017 --authenticationDatabase 'admin' -u 'admin' -p 'password' --quiet
+      interval: 5s
+      timeout: 1s
+    ports:
+      - "27017:27017"
+    networks:
+      - app_test
+    command: >
+      mongod --quiet
+      
+  redis:
+    image: redis:5.0-alpine
+    volumes:
+      - redis:/data
+    command: >
+      redis-server
+    environment:
+      REDIS_REPLICATION_MODE: master
+      TZ: Asia/Shanghai
+      LANG: en_US.UTF-8
+    healthcheck:
+      test: >
+        if ping=$$(redis-cli -h localhost -p 6379 ping) && [ $$ping = 'PONG' ]; then
+          exit 0;
+        fi;
+
+        exit 1;
+      interval: 5s
+      timeout: 1s
+    ports:
+      - "6379:6379"
+    networks:
+      - app_test
+  
+  #paymnent:
+  #  networks:
+  #    - app_test
+  #  build:
+  #    context: .
+  #    dockerfile: ./build/Dockerfile
+  #  environment:
+  #    ENV_NAME: uat
+  #  ports:
+  #    - 3000:3000
+  #  links:
+  #      - mongo
+  #  depends_on:
+  #      - mongo
+
+networks:
+  app_test:
+    driver: bridge
+
+volumes:
+  mongo: {}
+  redis: {}

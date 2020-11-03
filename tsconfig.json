@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "allowJs": false,
+    "target": "es6",
+    "sourceMap": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+   // "noUnusedLocals": true,
+   
+    "alwaysStrict": true,
+    "strict": true,
+    "baseUrl": "./src",
+    "paths": {
+        "@config/*": ["config/*"],
+        "@helpers/*": ["helpers/*"],
+        "@lib/*": ["lib/*"],
+        "@controllers/*": ["api/controllers/*"],
+        "@routes/*": ["api/routes/*"],
+        "@services/*": ["api/services/*"],
+        "@joischema/*": ["lib/joi/*"],
+        "@type/*": ["type/*"],
+        "@interface/*": ["interface/*"],
+        "@modules/*": ["modules/*"],
+        "@models/*": ["models/*"]
+      },
+  },
+  "include": [
+    "./src/**/*",
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+}

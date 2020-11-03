@@ -1,0 +1,80 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: {{NAMESPACE}}
+  name: {{APP_NAME}}
+  labels:
+    app: {{APP_NAME}}
+spec:
+  replicas: {{REPLICAS}}
+  selector:
+    matchLabels:
+      app: {{APP_NAME}}
+  template:
+    metadata:
+      labels:
+        app: {{APP_NAME}}
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: {{APP_NAME}}
+        image: {{ECR}}/{{APP_NAME}}:{{IMAGE_TAG}}
+        ports:
+        - name: svc-port
+          containerPort: {{PORT}}
+        envFrom:
+        - secretRef:
+            name: {{APP_NAME}}-config
+        readinessProbe:
+          tcpSocket:
+            port: svc-port
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 7
+        livenessProbe:
+          tcpSocket:
+            port: svc-port
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 7
+        resources:
+          requests:
+            memory: {{REQUEST_MEM}}
+            cpu: {{REQUEST_CPU}}
+          limits:
+            memory: {{LIMIT_MEM}}
+            cpu: {{LIMIT_CPU}}
+
+      - name: {{APP_NAME_2}}
+        image: {{ECR}}/{{APP_NAME_2}}:latest
+        ports:
+        - name: svc-port
+          containerPort: {{PORT_2}}
+        readinessProbe:
+          tcpSocket:
+            port: svc-port
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 7
+        livenessProbe:
+          tcpSocket:
+            port: svc-port
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 7
+        resources:
+          requests:
+            memory: {{REQUEST_MEM_2}}
+            cpu: {{REQUEST_CPU_2}}
+          limits:
+            memory: {{LIMIT_MEM_2}}
+            cpu: {{LIMIT_CPU_2}}
+
