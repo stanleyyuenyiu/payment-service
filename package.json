@@ -13,9 +13,9 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://bitbucket.lkkhpgdi.com/scm/cloud/payment.git"
+        "url": "https://github.com/stanleyyuenyiu/payment-service"
     },
-    "author": "Digital Innovation",
+    "author": "Stanley Yuen",
     "license": "MIT",
     "engines": {
         "node": ">12.0.0"
@@ -56,7 +56,6 @@
         "axios": "^0.19.2",
         "confidence": "4.x.x",
         "edge-js": "^14.3.1",
-        "epimetheus": "git+https://stanley.yuen:abc0525DA@gitivcm.lkkhpg.com/scm/cloud/node-epimetheus#hapi",
         "glob": "^7.1.5",
         "got": "^v11.3.0",
         "hapi-auth-jwt2": "^8.3.0",
