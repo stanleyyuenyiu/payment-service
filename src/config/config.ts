@@ -12,7 +12,7 @@ export default {
         maxAge: 600,
     },
     mongodb: {
-        uri: process.env.MONGODB_URI || 'mongodb://admin:password@localhost:27017/om-payment?authSource=admin',
+        uri: process.env.MONGODB_URI ,
         options: {
             useNewUrlParser: true,
             useUnifiedTopology: true,
@@ -29,8 +29,8 @@ export default {
     },
     strapi: {
         host: process.env.STRAPI_SERVICE || 'http://localhost:1337',
-        user: process.env.STRAPI_SERVICE_USER || 'payment',
-        pwd: process.env.STRAPI_SERVICE_PWD || 'abc0525DA',
+        user: process.env.STRAPI_SERVICE_USER ,
+        pwd: process.env.STRAPI_SERVICE_PWD ,
     },
     ctbcProxyApi: {
         host: process.env.CTBCAPI_PROXY_SERVICE || 'http://localhost:8000',
